@@ -6,7 +6,7 @@ import java.io.File;
 public class User {
     private String userName;
     private String password;
-    private ArrayList<Journal> entries;
+    private ArrayList<Journal> entries = new ArrayList<Journal> ();
 
 
     public User (String u, String p, Journal j) {
@@ -27,13 +27,10 @@ public class User {
         return entries;
     }
 
-    public void setUser (String x) {
-        userName = x;
+    public void addEntry (Journal j) {
+        entries.add(j);
     }
 
-    public void setPassword (String y) {
-        password = y;
-    }
 
     public void save () {
         try {
@@ -41,8 +38,9 @@ public class User {
             f.createNewFile(); // this method will create the file if it does not exist, if it does exist, it does nothing
             FileWriter fw = new FileWriter("src/user.data");
             fw.write("USER: " + userName + ", " + password);
+            fw.write("\n"+"ENTRY: ");
             for (Journal x : entries) {
-            fw.write ("ENTRY: " + x.getDate() + ", " + x.getRate() + " |" + x.getEntry());
+            fw.write (x.getDate() + ", " + x.getRate() + " |" + x.getEntry() + "; ");
             }
             fw.close();
         } catch (IOException e) {
@@ -50,6 +48,8 @@ public class User {
             e.printStackTrace();
         }
     }
+
+    // instead of all the ocde in mian makle methods for it here
 
     }
 

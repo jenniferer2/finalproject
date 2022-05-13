@@ -1,9 +1,9 @@
 public class Journal {
     private String date;
     private String entry;
-    private int rate;
+    private String rate;
 
-    public Journal (String d, String e, int r) {
+    public Journal (String d, String e, String r) {
         date = d;
         entry = e;
         rate = r;
@@ -17,7 +17,7 @@ public class Journal {
         return entry;
     }
 
-    public int getRate () {
+    public String getRate () {
         return rate;
     }
 
