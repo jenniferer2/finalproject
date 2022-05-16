@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
+import java.util.Scanner;
 
 public class User {
     private String userName;
@@ -27,10 +28,30 @@ public class User {
         return entries;
     }
 
-    public void addEntry (Journal j) {
-        entries.add(j);
+    public void addEntry () {
+        Scanner x = new Scanner(System.in);
+        System.out.print("Today's date: ");
+        String date = x.nextLine();
+        System.out.print("Begin your entry: ");
+        String entry = x.nextLine();
+        Journal w = new Journal (date, entry);
+        entries.add(w);
+        save();
+        System.out.println("\n"+"Saving entry... Complete!"+"\n");
     }
+    public void runTime() {
+        String option ="";
+        while (!(option.equals("2"))) {
+            System.out.println("1. Add entry" + "\n" + "2. Quit");
+            Scanner in = new Scanner(System.in);
+            System.out.print("Enter your option: ");
+            option = in.nextLine();
+            if (option.equals("1")) {
+                addEntry();
+            }
 
+        }
+    }
 
     public void save () {
         try {
@@ -38,9 +59,9 @@ public class User {
             f.createNewFile(); // this method will create the file if it does not exist, if it does exist, it does nothing
             FileWriter fw = new FileWriter("src/user.data");
             fw.write("USER: " + userName + ", " + password);
-            fw.write("\n"+"ENTRY: ");
             for (Journal x : entries) {
-            fw.write (x.getDate() + ", " + x.getRate() + " |" + x.getEntry() + "; ");
+                fw.write("\n"+"ENTRY: ");
+                fw.write (x.getDate() +"|" + x.getEntry() + "; ");
             }
             fw.close();
         } catch (IOException e) {
@@ -49,7 +70,8 @@ public class User {
         }
     }
 
-    // instead of all the ocde in mian makle methods for it here
+
+
 
     }
 
