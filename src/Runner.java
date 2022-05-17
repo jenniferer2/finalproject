@@ -93,13 +93,6 @@ public class Runner {
 
 
 
-      /*  System.out.println("Welcome to Journaling!");
-        Scanner in = new Scanner (System.in);
-        System.out.println("1. Login" + "\n" + "2. Register");
-        String answer = in.nextLine();
-
-       */
-
 
 
 
