@@ -40,18 +40,34 @@ public class User {
         System.out.println("\n" + "Saving entry... Complete!" + "\n");
     }
 
-    public void runTime() {
+    public void runTime(ArrayList<Journal> j) {
         String option = "";
-        while (!(option.equals("2"))) {
-            System.out.println("1. Add entry" + "\n" + "2. Quit");
+        while (!(option.equals("3"))) {
+            System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit");
             Scanner in = new Scanner(System.in);
             System.out.print("Enter your option: ");
             option = in.nextLine();
             if (option.equals("1")) {
                 addEntry();
             }
+            if (option.equals("2")) {
+                Journal ran = anon(j);
+                System.out.println("\n"+"Anonymous entry:");
+                System.out.println(ran.getDate() + "\n" + ran.getEntry()+"\n");
+            }
 
         }
+    }
+
+    public Journal anon (ArrayList<Journal> j) {
+        int length = j.size();
+        int num = (int) (Math.random () * length ) ;
+        return j.get(num);
+    }
+
+    public void addUser () {
+        System.out.println("Enter a username")
+                // shoudl make it where it also checks if the user already exists
     }
 
     public void save() {
@@ -64,32 +80,28 @@ public class User {
             FileWriter fw = new FileWriter("src/user.data", true);
             if (t) {
                 Scanner s = new Scanner(f);
-                boolean checkForU = true;
-                boolean checkForE = true;
+
+                ArrayList<Integer> track = new ArrayList<Integer> ();
                 while (s.hasNextLine()) {
                     String data = s.nextLine();
-                    if ((data.contains(userName))) {
-                        checkForU = false;
-                        System.out.println(checkForU);
-                    }
-                    for (Journal x : entries) {
-                        // need help with reading the file
-                        if ((data.contains(x.getDate())) && data.contains(x.getEntry())) {
-                                checkForE = false;
-                            System.out.println(checkForE);
+
+                    for (int i = 0; i < entries.size(); i ++) {
+                        if (data.contains(entries.get(i).getEntry()))
+                        {
+                            track.add(i);
                         }
+
                     }
                 }
 
-                if (!checkForU && checkForE) {
-                    fw.write("USER: " + userName + ", " + password);
-                }
-                if (checkForU && !checkForE) {
-                    for (Journal x : entries) {
-                        fw.write("\n" + "ENTRY: ");
-                        fw.write(x.getDate() + "|" + x.getEntry() + "; ");
+                    for (int i = 0; i < entries.size(); i++) {
+                        if (!(track.contains(i))) {
+                            fw.write("\n" + "ENTRY: ");
+                            fw.write(entries.get(i).getDate() + "|" + entries.get(i).getEntry() + "; ");
+                        }
+
                     }
-                }
+
 
             }
             else {
