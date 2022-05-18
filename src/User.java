@@ -65,9 +65,16 @@ public class User {
         return j.get(num);
     }
 
-    public void addUser () {
-        System.out.println("Enter a username")
-                // shoudl make it where it also checks if the user already exists
+    public boolean addUser (String name, ArrayList<User> u) {
+
+        boolean check = true;
+        for (User uu : u) {
+            if (uu.getUserName().equals(name)) {
+                check = false;
+            }
+        }
+        return check;
+
     }
 
     public void save() {
@@ -101,8 +108,6 @@ public class User {
                         }
 
                     }
-
-
             }
             else {
                 fw.write("USER: " + userName + ", " + password);
