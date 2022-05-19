@@ -36,7 +36,7 @@ public class User {
         String entry = x.nextLine();
         Journal w = new Journal(date, entry);
         entries.add(w);
-        save();
+        //save();
         System.out.println("\n" + "Saving entry... Complete!" + "\n");
     }
 
@@ -77,7 +77,7 @@ public class User {
 
     }
 
-    public void save() {
+    /*public void save() {
         try {
             boolean t = true;
             File f = new File("src/user.data");
@@ -126,5 +126,9 @@ public class User {
 
 
     }
+
+     */
+
+
 }
 
