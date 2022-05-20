@@ -29,7 +29,7 @@ public class Runner {
                         System.out.print("Enter Password: ");
                         String pass = in.nextLine();
                         if (pass.equals(uI.getCurrentUser().getPassword())) {
-                            System.out.println("\n" + "Welcome back " + u.getUserName() + " Let's start journaling!");
+                            System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUserName() + " Let's start journaling!");
                             System.out.println("------------------------------------------------------------" + "\n");
                             uI.getCurrentUser().addEntry();
                             break;
@@ -42,14 +42,11 @@ public class Runner {
                     }
                 }
                 if (option.equals("2")) {
-                    for (User uu : userList) {
-                        userNList.add(uu.getUserName());
-                    }
                     System.out.println("Registration");
                     Scanner x = new Scanner(System.in);
                     System.out.print("Set a username: ");
                     String name = x.nextLine();
-                    while (userNList.contains(name)) {
+                    while (uI.findUser(name)) {
                         System.out.println("This username is already taken:");
                         System.out.print("Set a username: ");
                         name = x.nextLine();
@@ -62,14 +59,13 @@ public class Runner {
                     String entry = x.nextLine();
                     Journal jj = new Journal (date, entry);
                     User uu = new User (name, pass, jj);
-                    //uu.save();
-                    userList.add(uu);
-                    entryList.add(jj);
+                    uI.addUser(uu);
+
                     System.out.print("\n"+"Saving entry... Complete!"+"\n");
                     break;
                 }
             }
-              u.runTime(entryList);
+
 
         }
 

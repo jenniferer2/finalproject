@@ -16,6 +16,12 @@ public class User {
         entries.add(j);
     }
 
+    public User (String u, String p, ArrayList<Journal> e) {
+        userName = u;
+        password = p;
+        entries = e;
+    }
+
     public String getUserName() {
         return userName;
     }
