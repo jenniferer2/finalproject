@@ -34,19 +34,11 @@ public class User {
         return entries;
     }
 
-    public void addEntry() {
-        Scanner x = new Scanner(System.in);
-        System.out.print("Today's date: ");
-        String date = x.nextLine();
-        System.out.print("Begin your entry: ");
-        String entry = x.nextLine();
-        Journal w = new Journal(date, entry);
-        entries.add(w);
-        //save();
-        System.out.println("\n" + "Saving entry... Complete!" + "\n");
+    public void addEntry(Journal w) {
+      entries.add(w);
     }
 
-    public void runTime(ArrayList<Journal> j) {
+    /* public void runTime(ArrayList<Journal> j) {
         String option = "";
         while (!(option.equals("3"))) {
             System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit");
@@ -65,6 +57,7 @@ public class User {
         }
     }
 
+     */
     public Journal anon (ArrayList<Journal> j) {
         int length = j.size();
         int num = (int) (Math.random () * length ) ;
@@ -83,58 +76,15 @@ public class User {
 
     }
 
-    /*public void save() {
-        try {
-            boolean t = true;
-            File f = new File("src/user.data");
-            if (f.createNewFile()) { // this method will create the file if it does not exist, if it does exist, it does nothing
-                t = false;
-            }
-            FileWriter fw = new FileWriter("src/user.data", true);
-            if (t) {
-                Scanner s = new Scanner(f);
-
-                ArrayList<Integer> track = new ArrayList<Integer> ();
-                while (s.hasNextLine()) {
-                    String data = s.nextLine();
-
-                    for (int i = 0; i < entries.size(); i ++) {
-                        if (data.contains(entries.get(i).getEntry()))
-                        {
-                            track.add(i);
-                        }
-
-                    }
-                }
-
-                    for (int i = 0; i < entries.size(); i++) {
-                        if (!(track.contains(i))) {
-                            fw.write("\n" + "ENTRY: ");
-                            fw.write(entries.get(i).getDate() + "|" + entries.get(i).getEntry() + "; ");
-                        }
-
-                    }
-            }
-            else {
-                fw.write("USER: " + userName + ", " + password);
-                for (Journal x : entries) {
-                    fw.write("\n" + "ENTRY: ");
-                    fw.write(x.getDate() + "|" + x.getEntry() + "; ");
-                }
-
-
-            }
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Unable to create file");
-            e.printStackTrace();
+    public String toString () {
+        String s = "";
+        String one = userName + " |" + password;
+        for (int i = 0; i < entries.size(); i++) {
+            String g = entries.get(i).getDate() + "|" +entries.get(i).getEntry();
+            s = "\n" + s + g;
         }
-
-
+        return one + s ;
     }
-
-     */
-
 
 }
 

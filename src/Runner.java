@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 
 public class Runner {
 
-
     public static void main (String args[]) {
         UserInfo uI = new UserInfo ();
             boolean see = true;
@@ -21,8 +20,6 @@ public class Runner {
                 System.out.print("Enter your option: ");
                  option = in.nextLine();
                 if (option.equals("1")) {
-                    see = false;
-                    boolean check = false;
                     System.out.print("Enter username: ");
                     String userIn = in.nextLine();
                     if (uI.findUser(userIn)) {
@@ -31,7 +28,14 @@ public class Runner {
                         if (pass.equals(uI.getCurrentUser().getPassword())) {
                             System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUserName() + " Let's start journaling!");
                             System.out.println("------------------------------------------------------------" + "\n");
-                            uI.getCurrentUser().addEntry();
+                            Scanner x = new Scanner(System.in);
+                            System.out.print("Today's date: ");
+                            String date = x.nextLine();
+                            System.out.print("Begin your entry: ");
+                            String entry = x.nextLine();
+                            Journal w = new Journal(date, entry);
+                            uI.addEntry(uI.getCurrentUser().getUserName(), w);
+                            System.out.println("\n" + "Saving entry... Complete!" + "\n");
                             break;
                         }
                         else {
@@ -60,18 +64,16 @@ public class Runner {
                     Journal jj = new Journal (date, entry);
                     User uu = new User (name, pass, jj);
                     uI.addUser(uu);
-
                     System.out.print("\n"+"Saving entry... Complete!"+"\n");
                     break;
                 }
             }
+            uI.save();
+            uI.print();
 
 
         }
 
-
-
-    }
 
 
     }
