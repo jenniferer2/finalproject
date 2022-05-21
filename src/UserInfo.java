@@ -21,33 +21,25 @@ public class UserInfo {
             Scanner s = new Scanner(f);
             String user = "";
             String password = "";
-            ArrayList<Journal> jList = new ArrayList<Journal>();
+            Journal j = null;
+            ArrayList<Journal> jL = new ArrayList<Journal> ();
             while (s.hasNextLine()) {
                 String data = s.nextLine();
                 if (data.contains("USER:")) {
                     user = data.substring(data.indexOf(" ") + 1, data.indexOf(","));
                     password = data.substring(data.indexOf(",") + 2);
-                    jList = new ArrayList<Journal>();
 
                 }
-                if (data.contains("ENTRY:")) {
-                    while (s.hasNextLine() && data.contains("ENTRY:")) {
-                        String date = data.substring(data.indexOf(" ") + 1, data.indexOf("|"));
-                        String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
-                        Journal j = new Journal(date, entry);
-                        jList.add(j);
-                    }
-                    User u = new User(user, password, jList);
-                    users.add(u);
-                }
             }
+            User u = new User(user, password);
+            users.add(u);
             s.close();
 
+        } catch (FileNotFoundException fnf) {
+            users = new ArrayList<User>();
         }
-        catch(FileNotFoundException fnf){
-                users = new ArrayList<User>();
-            }
     }
+
 
     public boolean findUser(String u) {
         for (int i = 0; i < users.size(); i++) {
@@ -71,21 +63,31 @@ public class UserInfo {
         users.add(u);
     }
 
+    public void print () {
+        for (int i = 0; i < users.size(); i ++) {
+            System.out.println(users.get(i).getUserName());
+        }
+    }
+
     public void save() {
         try {
+
             File f = new File("src/User.data");
             f.createNewFile();
             FileWriter fw = new FileWriter("src/User.data");
             String data = "";
-            for (int i = 0; i < users.size(); i++) {
-                User u = users.get(i);
-                data = u.getUserName() + ", " + u.getPassword();
+            for (int i = 0; i < users.size(); i ++) {
+                data = users.get(i).getUserName() + ", " + users.get(i).getPassword();
                 fw.write("USER: " + data + "\n");
-                for (int x = 0; x < u.getEntries().size(); x++) {
-                    fw.write("ENTRY: " + u.getEntries().get(x).getDate() + "|" + u.getEntries().get(x).getEntry());
+            }
+                /*data = u.getUserName() + ", " + u.getPassword();
+                fw.write("USER: " + data + "\n");
+                for (int i = 0; i < u.getEntries().size(); i++) {
+                    fw.write("ENTRY: " + u.getEntries().get(i).getDate() + "|" + u.getEntries().get(i).getEntry() + ";" + "\n");
                     }
 
-            }
+                 */
+
             fw.close();
 
         } catch (IOException e) {
@@ -95,19 +97,23 @@ public class UserInfo {
         }
     }
 
-    public void print () {
+
+    /*public void print () {
         for (int i = 0; i < users.size(); i++) {
             System.out.println(users.get(i).toString());
         }
     }
 
-    public void addEntry (String uN, Journal j) {
+     */
+
+    /*public void addEntry (String uN, Journal j) {
         for (User u : users) {
             if (u.getUserName().equals(uN)) {
                 u.addEntry(j);
             }
-
         }
+
+     */
     }
-}
+
 

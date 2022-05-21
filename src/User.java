@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +12,7 @@ public class User {
 
 
     public User(String u, String p, Journal j) {
+
         userName = u;
         password = p;
         entries.add(j);
@@ -20,6 +22,17 @@ public class User {
         userName = u;
         password = p;
         entries = e;
+    }
+
+    public User () {
+        read();
+    }
+
+    public User (String u, String pass) {
+        userName = u;
+        password = pass;
+        entries = null;
+
     }
 
     public String getUserName() {
@@ -37,32 +50,18 @@ public class User {
     public void addEntry(Journal w) {
       entries.add(w);
     }
-
-    /* public void runTime(ArrayList<Journal> j) {
-        String option = "";
-        while (!(option.equals("3"))) {
-            System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit");
-            Scanner in = new Scanner(System.in);
-            System.out.print("Enter your option: ");
-            option = in.nextLine();
-            if (option.equals("1")) {
-                addEntry();
+    public void removeExtra () {
+            for (int i = 0; i < entries.size(); i++) {
+                String x = entries.get(i).getDate() + "|" + entries.get(i).getEntry();
+                for (int xx = i + 1; xx < entries.size(); xx++) {
+                    String w = entries.get(xx).getDate() + "|" + entries.get(xx).getEntry();
+                    if (x.equals(w)) {
+                        entries.remove(entries.get(xx));
+                    }
+                }
             }
-            if (option.equals("2")) {
-                Journal ran = anon(j);
-                System.out.println("\n"+"Anonymous entry:");
-                System.out.println(ran.getDate() + "\n" + ran.getEntry()+"\n");
-            }
-
         }
-    }
 
-     */
-    public Journal anon (ArrayList<Journal> j) {
-        int length = j.size();
-        int num = (int) (Math.random () * length ) ;
-        return j.get(num);
-    }
 
     public boolean addUser (String name, ArrayList<User> u) {
 
@@ -84,6 +83,57 @@ public class User {
             s = "\n" + s + g;
         }
         return one + s ;
+    }
+    public void read() {
+        try {
+            String name = getUserName();
+            File f = new File("src/" + userName + ".data");
+            Scanner s = new Scanner(f);
+            String user = "";
+            String password = "";
+            Journal j = null;
+            ArrayList<Journal> jL = new ArrayList<Journal> ();
+            while (s.hasNextLine()) {
+                String data = s.nextLine();
+                if (data.contains("USER:")) {
+                    user = data.substring(data.indexOf(" ") + 1, data.indexOf(","));
+                    password = data.substring(data.indexOf(",") + 2);
+
+                }
+                if (data.contains("ENTRY:")) {
+                    String date = data.substring(data.indexOf(" ") + 1, data.indexOf("|"));
+                    String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
+                    j = new Journal(date, entry);
+                    jL.add(j);
+                }
+            }
+            User uu = new User(user, password, jL);
+            s.close();
+
+        } catch (FileNotFoundException fnf) {
+            System.out.println("File not found");
+        }
+    }
+
+    public void save() {
+        try {
+            File f = new File("src/" + userName + ".data");
+            f.createNewFile();
+            FileWriter fw = new FileWriter("src/" + userName + ".data");
+            String data = "";
+            data = userName + ", " + password;
+            fw.write("USER: " + data + "\n");
+            for (int i = 0; i < getEntries().size(); i++) {
+                fw.write("ENTRY: " + getEntries().get(i).getDate() + "|" + getEntries().get(i).getEntry() + ";" + "\n");
+            }
+
+            fw.close();
+
+        } catch (IOException e) {
+            System.out.println("Unable to create file");
+            e.printStackTrace();
+
+        }
     }
 
 }
