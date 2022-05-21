@@ -24,16 +24,6 @@ public class User {
         entries = e;
     }
 
-    public User () {
-        read();
-    }
-
-    public User (String u, String pass) {
-        userName = u;
-        password = pass;
-        entries = null;
-
-    }
 
     public String getUserName() {
         return userName;
@@ -134,6 +124,28 @@ public class User {
             e.printStackTrace();
 
         }
+    }
+
+    public void runtime () {
+        String o = "";
+        while (!(o.equals("2"))) {
+            System.out.println("1. Add entry" + "\n" + "2. Quit");
+            Scanner w = new Scanner(System.in);
+            System.out.print("Enter your option: ");
+            o = w.nextLine();
+            if (o.equals("1")) {
+                Scanner x = new Scanner(System.in);
+                System.out.print("Today's date: ");
+                String date = x.nextLine();
+                System.out.print("Begin your entry: ");
+                String entry = x.nextLine();
+                Journal ww = new Journal(date, entry);
+                addEntry(ww);
+                System.out.println("\n" + "Saving entry... Complete!" + "\n");
+            }
+
+            }
+
     }
 
 }

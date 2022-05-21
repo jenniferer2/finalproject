@@ -30,8 +30,17 @@ public class UserInfo {
                     password = data.substring(data.indexOf(",") + 2);
 
                 }
+                if (data.contains("ENTRY:")) {
+                    String date = data.substring(data.indexOf(" ") + 1, data.indexOf("|"));
+                    String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
+                    j = new Journal(date, entry);
+                    jL.add(j);
+                }
+                if (data.contains("+")) {
+                    jL = new ArrayList<Journal> ();
+                }
             }
-            User u = new User(user, password);
+            User u = new User(user, password, jL);
             users.add(u);
             s.close();
 
@@ -71,7 +80,6 @@ public class UserInfo {
 
     public void save() {
         try {
-
             File f = new File("src/User.data");
             f.createNewFile();
             FileWriter fw = new FileWriter("src/User.data");
@@ -79,14 +87,12 @@ public class UserInfo {
             for (int i = 0; i < users.size(); i ++) {
                 data = users.get(i).getUserName() + ", " + users.get(i).getPassword();
                 fw.write("USER: " + data + "\n");
+                for (int x = 0; x < users.get(i).getEntries().size(); x++) {
+                    fw.write("ENTRY: " + users.get(i).getEntries().get(x).getDate() + "|" + users.get(i).getEntries().get(x).getEntry() + ";" + "\n");
+                }
             }
-                /*data = u.getUserName() + ", " + u.getPassword();
-                fw.write("USER: " + data + "\n");
-                for (int i = 0; i < u.getEntries().size(); i++) {
-                    fw.write("ENTRY: " + u.getEntries().get(i).getDate() + "|" + u.getEntries().get(i).getEntry() + ";" + "\n");
-                    }
 
-                 */
+
 
             fw.close();
 
@@ -97,23 +103,6 @@ public class UserInfo {
         }
     }
 
-
-    /*public void print () {
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(users.get(i).toString());
-        }
-    }
-
-     */
-
-    /*public void addEntry (String uN, Journal j) {
-        for (User u : users) {
-            if (u.getUserName().equals(uN)) {
-                u.addEntry(j);
-            }
-        }
-
-     */
-    }
+}
 
 
