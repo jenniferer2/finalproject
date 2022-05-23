@@ -11,13 +11,6 @@ public class User {
     private ArrayList<Journal> entries = new ArrayList<Journal>();
 
 
-    public User(String u, String p, Journal j) {
-
-        userName = u;
-        password = p;
-        entries.add(j);
-    }
-
     public User (String u, String p, ArrayList<Journal> e) {
         userName = u;
         password = p;
@@ -37,24 +30,13 @@ public class User {
         return entries;
     }
 
+
     public void addEntry(Journal w) {
       entries.add(w);
     }
-    public void removeExtra () {
-            for (int i = 0; i < entries.size(); i++) {
-                String x = entries.get(i).getDate() + "|" + entries.get(i).getEntry();
-                for (int xx = i + 1; xx < entries.size(); xx++) {
-                    String w = entries.get(xx).getDate() + "|" + entries.get(xx).getEntry();
-                    if (x.equals(w)) {
-                        entries.remove(entries.get(xx));
-                    }
-                }
-            }
-        }
 
 
     public boolean addUser (String name, ArrayList<User> u) {
-
         boolean check = true;
         for (User uu : u) {
             if (uu.getUserName().equals(name)) {
@@ -62,7 +44,6 @@ public class User {
             }
         }
         return check;
-
     }
 
     public String toString () {
@@ -73,57 +54,6 @@ public class User {
             s = "\n" + s + g;
         }
         return one + s ;
-    }
-    public void read() {
-        try {
-            String name = getUserName();
-            File f = new File("src/" + userName + ".data");
-            Scanner s = new Scanner(f);
-            String user = "";
-            String password = "";
-            Journal j = null;
-            ArrayList<Journal> jL = new ArrayList<Journal> ();
-            while (s.hasNextLine()) {
-                String data = s.nextLine();
-                if (data.contains("USER:")) {
-                    user = data.substring(data.indexOf(" ") + 1, data.indexOf(","));
-                    password = data.substring(data.indexOf(",") + 2);
-
-                }
-                if (data.contains("ENTRY:")) {
-                    String date = data.substring(data.indexOf(" ") + 1, data.indexOf("|"));
-                    String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
-                    j = new Journal(date, entry);
-                    jL.add(j);
-                }
-            }
-            User uu = new User(user, password, jL);
-            s.close();
-
-        } catch (FileNotFoundException fnf) {
-            System.out.println("File not found");
-        }
-    }
-
-    public void save() {
-        try {
-            File f = new File("src/" + userName + ".data");
-            f.createNewFile();
-            FileWriter fw = new FileWriter("src/" + userName + ".data");
-            String data = "";
-            data = userName + ", " + password;
-            fw.write("USER: " + data + "\n");
-            for (int i = 0; i < getEntries().size(); i++) {
-                fw.write("ENTRY: " + getEntries().get(i).getDate() + "|" + getEntries().get(i).getEntry() + ";" + "\n");
-            }
-
-            fw.close();
-
-        } catch (IOException e) {
-            System.out.println("Unable to create file");
-            e.printStackTrace();
-
-        }
     }
 
     public void runtime () {
@@ -139,7 +69,7 @@ public class User {
                 String date = x.nextLine();
                 System.out.print("Begin your entry: ");
                 String entry = x.nextLine();
-                Journal ww = new Journal(date, entry);
+                Journal ww = new Journal(userName, date, entry);
                 addEntry(ww);
                 System.out.println("\n" + "Saving entry... Complete!" + "\n");
             }

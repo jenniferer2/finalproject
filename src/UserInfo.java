@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInfo {
-    private ArrayList<User> users;
+    private ArrayList<User> users = new ArrayList<User>();
     private User currentUser;
 
     public UserInfo() {
         loadUsers();
         currentUser = null;
+
     }
 
     public void loadUsers() {
         try {
-            users = new ArrayList<User>();
             File f = new File("src/User.data");
             Scanner s = new Scanner(f);
             String user = "";
@@ -26,22 +26,31 @@ public class UserInfo {
             while (s.hasNextLine()) {
                 String data = s.nextLine();
                 if (data.contains("USER:")) {
+                    jL = new ArrayList<Journal> ();
                     user = data.substring(data.indexOf(" ") + 1, data.indexOf(","));
                     password = data.substring(data.indexOf(",") + 2);
-
-                }
-                if (data.contains("ENTRY:")) {
-                    String date = data.substring(data.indexOf(" ") + 1, data.indexOf("|"));
-                    String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
-                    j = new Journal(date, entry);
-                    jL.add(j);
-                }
-                if (data.contains("+")) {
-                    jL = new ArrayList<Journal> ();
+                    User u = new User (user, password, jL);
+                    users.add(u);
                 }
             }
-            User u = new User(user, password, jL);
-            users.add(u);
+            while (s.hasNextLine()) {
+                String data = s.nextLine();
+                if (data.contains("ENTRY")) {
+                    String author = data.substring(data.indexOf("y")+ 2, data.indexOf(":"));
+                    System.out.println(author);
+                    String date = data.substring(data.indexOf(":") + 1, data.indexOf("|"));
+                    System.out.println(date);
+                    String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
+                    System.out.println(entry);
+                    Journal jou = new Journal (author, date, entry);
+                    for (int i = 0; i < users.size(); i++) {
+                        if (users.get(i).getUserName().equals(author)) {
+                            System.out.println("Adding " + jou.getDate() + "|" +jou.getEntry() + "to " + users.get(i).getUserName());
+                            users.get(i).addEntry(jou);
+                        }
+                    }
+                }
+            }
             s.close();
 
         } catch (FileNotFoundException fnf) {
@@ -72,10 +81,17 @@ public class UserInfo {
         users.add(u);
     }
 
-    public void print () {
+    public String toString () {
+        String s = "";
         for (int i = 0; i < users.size(); i ++) {
-            System.out.println(users.get(i).getUserName());
+            s = s + users.get(i).getUserName() + "\n";
+            for (int x  = 0; x < users.get(i).getEntries().size(); x++) {
+                s = s + users.get(i).getEntries().get(x);
+
+            }
+
         }
+        return s;
     }
 
     public void save() {
@@ -87,13 +103,12 @@ public class UserInfo {
             for (int i = 0; i < users.size(); i ++) {
                 data = users.get(i).getUserName() + ", " + users.get(i).getPassword();
                 fw.write("USER: " + data + "\n");
+            }
+            for (int i = 0; i < users.size(); i ++) {
                 for (int x = 0; x < users.get(i).getEntries().size(); x++) {
-                    fw.write("ENTRY: " + users.get(i).getEntries().get(x).getDate() + "|" + users.get(i).getEntries().get(x).getEntry() + ";" + "\n");
+                    fw.write("ENTRY by " + users.get(i).getUserName() + ":" + users.get(i).getEntries().get(x).getDate() + "|" + users.get(i).getEntries().get(x).getEntry() + ";" + "\n");
                 }
             }
-
-
-
             fw.close();
 
         } catch (IOException e) {

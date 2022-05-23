@@ -10,7 +10,6 @@ public class Runner {
 
     public static void main (String args[]) {
         UserInfo uI = new UserInfo ();
-            boolean see = true;
             System.out.println("\n"+ "Welcome to the Diary! Remember self love is the best love!");
             System.out.println("------------------------------------------------------------" + "\n");
             String option = "";
@@ -26,7 +25,6 @@ public class Runner {
                         System.out.print("Enter Password: ");
                         String pass = in.nextLine();
                         if (pass.equals(uI.getCurrentUser().getPassword())) {
-
                             System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUserName() + " Let's start journaling!");
                             System.out.println("------------------------------------------------------------" + "\n");
                             uI.getCurrentUser().runtime();
@@ -55,17 +53,18 @@ public class Runner {
                     String date = x.nextLine();
                     System.out.print("Begin your entry: ");
                     String entry = x.nextLine();
-                    Journal jj = new Journal (date, entry);
-                    User uu = new User (name, pass, jj);
+                    Journal jj = new Journal (name, date, entry);
+                    ArrayList<Journal> jL = new ArrayList<Journal> ();
+                    jL.add(jj);
+                    User uu = new User (name, pass, jL);
                     uI.addUser(uu);
                     System.out.print("\n"+"Saving entry... Complete!"+"\n");
                     uu.runtime();
                     break;
-
                 }
             }
-
-           uI.save();
+            System.out.println(uI.getUsers());
+            uI.save();
 
 
 
