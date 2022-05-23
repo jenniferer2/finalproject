@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class UserInfo {
     private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<Journal> entries = new ArrayList<Journal>();
     private User currentUser;
 
     public UserInfo() {
@@ -21,7 +22,6 @@ public class UserInfo {
             Scanner s = new Scanner(f);
             String user = "";
             String password = "";
-            Journal j = null;
             ArrayList<Journal> jL = new ArrayList<Journal> ();
             while (s.hasNextLine()) {
                 String data = s.nextLine();
@@ -33,25 +33,24 @@ public class UserInfo {
                     users.add(u);
                 }
             }
-            while (s.hasNextLine()) {
-                String data = s.nextLine();
+            Scanner g = new Scanner(f);
+            while (g.hasNextLine()) {
+                String data = g.nextLine();
                 if (data.contains("ENTRY")) {
-                    String author = data.substring(data.indexOf("y")+ 2, data.indexOf(":"));
-                    System.out.println(author);
+                    String author = data.substring(data.indexOf("y") + 2, data.indexOf(":"));
                     String date = data.substring(data.indexOf(":") + 1, data.indexOf("|"));
-                    System.out.println(date);
                     String entry = data.substring(data.indexOf("|") + 1, data.indexOf(";"));
-                    System.out.println(entry);
                     Journal jou = new Journal (author, date, entry);
+                    entries.add(jou);
                     for (int i = 0; i < users.size(); i++) {
                         if (users.get(i).getUserName().equals(author)) {
-                            System.out.println("Adding " + jou.getDate() + "|" +jou.getEntry() + "to " + users.get(i).getUserName());
                             users.get(i).addEntry(jou);
                         }
                     }
                 }
             }
             s.close();
+            g.close();
 
         } catch (FileNotFoundException fnf) {
             users = new ArrayList<User>();
@@ -81,6 +80,9 @@ public class UserInfo {
         users.add(u);
     }
 
+    public ArrayList<Journal> getEntries() {
+        return entries;
+    }
     public String toString () {
         String s = "";
         for (int i = 0; i < users.size(); i ++) {
@@ -89,7 +91,6 @@ public class UserInfo {
                 s = s + users.get(i).getEntries().get(x);
 
             }
-
         }
         return s;
     }

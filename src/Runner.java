@@ -27,7 +27,8 @@ public class Runner {
                         if (pass.equals(uI.getCurrentUser().getPassword())) {
                             System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUserName() + " Let's start journaling!");
                             System.out.println("------------------------------------------------------------" + "\n");
-                            uI.getCurrentUser().runtime();
+                            ArrayList<Journal> jE = uI.getEntries();
+                            uI.getCurrentUser().runtime(jE);
                             break;
                         }
                         else {
@@ -58,12 +59,12 @@ public class Runner {
                     jL.add(jj);
                     User uu = new User (name, pass, jL);
                     uI.addUser(uu);
+                    ArrayList<Journal> jE = uI.getEntries();
                     System.out.print("\n"+"Saving entry... Complete!"+"\n");
-                    uu.runtime();
+                    uu.runtime(jE);
                     break;
                 }
             }
-            System.out.println(uI.getUsers());
             uI.save();
 
 

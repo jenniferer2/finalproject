@@ -30,20 +30,8 @@ public class User {
         return entries;
     }
 
-
     public void addEntry(Journal w) {
       entries.add(w);
-    }
-
-
-    public boolean addUser (String name, ArrayList<User> u) {
-        boolean check = true;
-        for (User uu : u) {
-            if (uu.getUserName().equals(name)) {
-                check = false;
-            }
-        }
-        return check;
     }
 
     public String toString () {
@@ -56,10 +44,10 @@ public class User {
         return one + s ;
     }
 
-    public void runtime () {
+    public void runtime (ArrayList<Journal> jL) {
         String o = "";
-        while (!(o.equals("2"))) {
-            System.out.println("1. Add entry" + "\n" + "2. Quit");
+        while (!(o.equals("3"))) {
+            System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit");
             Scanner w = new Scanner(System.in);
             System.out.print("Enter your option: ");
             o = w.nextLine();
@@ -73,9 +61,13 @@ public class User {
                 addEntry(ww);
                 System.out.println("\n" + "Saving entry... Complete!" + "\n");
             }
-
+            if (o.equals("2")) {
+                int length = jL.size();
+                int ran = (int) (Math.random() * length + 1) ;
+                Journal j = jL.get(ran);
+                System.out.println("Date: " + j.getDate() + "\n" + "Entry: " + j.getEntry());
             }
-
+            }
     }
 
 }
