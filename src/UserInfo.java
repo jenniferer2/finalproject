@@ -13,7 +13,6 @@ public class UserInfo {
     public UserInfo() {
         loadUsers();
         currentUser = null;
-
     }
 
     public void loadUsers() {
@@ -43,7 +42,7 @@ public class UserInfo {
                     Journal jou = new Journal (author, date, entry);
                     entries.add(jou);
                     for (int i = 0; i < users.size(); i++) {
-                        if (users.get(i).getUserName().equals(author)) {
+                        if (users.get(i).getUsername().equals(author)) {
                             users.get(i).addEntry(jou);
                         }
                     }
@@ -52,7 +51,8 @@ public class UserInfo {
             s.close();
             g.close();
 
-        } catch (FileNotFoundException fnf) {
+        }
+        catch (FileNotFoundException fnf) {
             users = new ArrayList<User>();
         }
     }
@@ -60,7 +60,7 @@ public class UserInfo {
 
     public boolean findUser(String u) {
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserName().equals(u)) {
+            if (users.get(i).getUsername().equals(u)) {
                 currentUser = users.get(i);
                 return true;
             }
@@ -83,10 +83,11 @@ public class UserInfo {
     public ArrayList<Journal> getEntries() {
         return entries;
     }
+
     public String toString () {
         String s = "";
         for (int i = 0; i < users.size(); i ++) {
-            s = s + users.get(i).getUserName() + "\n";
+            s = s + users.get(i).getUsername() + "\n";
             for (int x  = 0; x < users.get(i).getEntries().size(); x++) {
                 s = s + users.get(i).getEntries().get(x);
 
@@ -102,17 +103,18 @@ public class UserInfo {
             FileWriter fw = new FileWriter("src/User.data");
             String data = "";
             for (int i = 0; i < users.size(); i ++) {
-                data = users.get(i).getUserName() + ", " + users.get(i).getPassword();
+                data = users.get(i).getUsername() + ", " + users.get(i).getPassword();
                 fw.write("USER: " + data + "\n");
             }
             for (int i = 0; i < users.size(); i ++) {
                 for (int x = 0; x < users.get(i).getEntries().size(); x++) {
-                    fw.write("ENTRY by " + users.get(i).getUserName() + ":" + users.get(i).getEntries().get(x).getDate() + "|" + users.get(i).getEntries().get(x).getEntry() + ";" + "\n");
+                    fw.write("ENTRY by " + users.get(i).getUsername() + ":" + users.get(i).getEntries().get(x).getDate() + "|" + users.get(i).getEntries().get(x).getEntry() + ";" + "\n");
                 }
             }
             fw.close();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("Unable to create file");
             e.printStackTrace();
 

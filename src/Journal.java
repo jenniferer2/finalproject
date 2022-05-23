@@ -4,7 +4,7 @@ public class Journal {
     private String author;
 
 
-    public Journal (String a ,String d, String e) {
+    public Journal (String a, String d, String e) {
         author = a;
         date = d;
         entry = e;
@@ -21,9 +21,5 @@ public class Journal {
     public String getEntry () {
         return entry;
     }
-
-
-
-
 
 }

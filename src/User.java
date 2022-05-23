@@ -6,20 +6,21 @@ import java.io.File;
 import java.util.Scanner;
 
 public class User {
-    private String userName;
+
+    private String username;
     private String password;
     private ArrayList<Journal> entries = new ArrayList<Journal>();
 
 
     public User (String u, String p, ArrayList<Journal> e) {
-        userName = u;
+        username = u;
         password = p;
         entries = e;
     }
 
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -36,7 +37,7 @@ public class User {
 
     public String toString () {
         String s = "";
-        String one = userName + " |" + password;
+        String one = username + " |" + password;
         for (int i = 0; i < entries.size(); i++) {
             String g = entries.get(i).getDate() + "|" +entries.get(i).getEntry();
             s = "\n" + s + g;
@@ -57,7 +58,7 @@ public class User {
                 String date = x.nextLine();
                 System.out.print("Begin your entry: ");
                 String entry = x.nextLine();
-                Journal ww = new Journal(userName, date, entry);
+                Journal ww = new Journal(username, date, entry);
                 addEntry(ww);
                 System.out.println("\n" + "Saving entry... Complete!" + "\n");
             }

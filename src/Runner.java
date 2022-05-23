@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class Runner {
 
     public static void main (String args[]) {
-        UserInfo uI = new UserInfo ();
+            UserInfo uI = new UserInfo ();
             System.out.println("\n"+ "Welcome to the Diary! Remember self love is the best love!");
             System.out.println("------------------------------------------------------------" + "\n");
             String option = "";
@@ -17,7 +17,7 @@ public class Runner {
                 System.out.println("1. Login" +"\n" + "2. Register" + "\n" + "3. Quit");
                 Scanner in = new Scanner(System.in);
                 System.out.print("Enter your option: ");
-                 option = in.nextLine();
+                option = in.nextLine();
                 if (option.equals("1")) {
                     System.out.print("Enter username: ");
                     String userIn = in.nextLine();
@@ -25,7 +25,7 @@ public class Runner {
                         System.out.print("Enter Password: ");
                         String pass = in.nextLine();
                         if (pass.equals(uI.getCurrentUser().getPassword())) {
-                            System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUserName() + " Let's start journaling!");
+                            System.out.println("\n" + "Welcome back " + uI.getCurrentUser().getUsername() + " Let's start journaling!");
                             System.out.println("------------------------------------------------------------" + "\n");
                             ArrayList<Journal> jE = uI.getEntries();
                             uI.getCurrentUser().runtime(jE);
@@ -34,7 +34,8 @@ public class Runner {
                         else {
                             System.out.println("This password is not correct");
                         }
-                    } else {
+                    }
+                    else {
                         System.out.println("This username does not exist");
                     }
                 }
@@ -66,12 +67,5 @@ public class Runner {
                 }
             }
             uI.save();
-
-
-
-
         }
-
-
-
     }
