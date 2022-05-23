@@ -63,7 +63,7 @@ public class User {
             }
             if (o.equals("2")) {
                 int length = jL.size();
-                int ran = (int) (Math.random() * length + 1) ;
+                int ran = (int) (Math.random() * length - 1 ) ;
                 Journal j = jL.get(ran);
                 System.out.println("Date: " + j.getDate() + "\n" + "Entry: " + j.getEntry());
             }
