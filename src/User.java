@@ -36,13 +36,13 @@ public class User {
     }
 
     public String toString () {
-        String s = "";
-        String one = username + " |" + password;
+        String end = "";
+        String userAndPass = username + " |" + password;
         for (int i = 0; i < entries.size(); i++) {
-            String g = entries.get(i).getDate() + "|" +entries.get(i).getEntry();
-            s = "\n" + s + g;
+            String entrys = entries.get(i).getDate() + "|" +entries.get(i).getEntry();
+            end = "\n" + end + entrys;
         }
-        return one + s ;
+        return userAndPass + end ;
     }
 
     public void runtime (ArrayList<Journal> jL) {
