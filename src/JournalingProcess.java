@@ -1,14 +1,9 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileWriter;
-import java.util.Scanner;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 
-public class Runner {
+public class JournalingProcess {
 
-    public static void main (String args[]) {
+    public static void main (String[] args) {
             UserInfo uI = new UserInfo ();
             System.out.println("\n"+ "Welcome to the Diary! Remember self love is the best love!");
             System.out.println("------------------------------------------------------------" + "\n");

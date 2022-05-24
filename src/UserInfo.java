@@ -17,7 +17,7 @@ public class UserInfo {
 
     public void loadUsers() {
         try {
-            File f = new File("src/User.data");
+            File f = new File("src/Users.data");
             Scanner s = new Scanner(f);
             String user = "";
             String password = "";
@@ -98,9 +98,9 @@ public class UserInfo {
 
     public void save() {
         try {
-            File f = new File("src/User.data");
+            File f = new File("src/Users.data");
             f.createNewFile();
-            FileWriter fw = new FileWriter("src/User.data");
+            FileWriter fw = new FileWriter("src/Users.data");
             String data = "";
             for (int i = 0; i < users.size(); i ++) {
                 data = users.get(i).getUsername() + ", " + users.get(i).getPassword();
