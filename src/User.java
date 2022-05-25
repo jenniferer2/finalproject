@@ -48,11 +48,12 @@ public class User {
     public void runtime (ArrayList<Journal> jL) {
         String o = "";
         while (!(o.equals("3"))) {
-            System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit");
+            System.out.println("1. Add entry" + "\n" + "2. Read an anonymous entry" + "\n" + "3. Quit" + "\n");
             Scanner w = new Scanner(System.in);
             System.out.print("Enter your option: ");
             o = w.nextLine();
             if (o.equals("1")) {
+                System.out.println("------------------------------------------------------------");
                 Scanner x = new Scanner(System.in);
                 System.out.print("Today's date: ");
                 String date = x.nextLine();
@@ -60,13 +61,19 @@ public class User {
                 String entry = x.nextLine();
                 Journal ww = new Journal(username, date, entry);
                 addEntry(ww);
-                System.out.println("\n" + "Saving entry... Complete!" + "\n");
+                System.out.print("\n" + "Saving entry... Complete!" + "\n");
+                System.out.println("------------------------------------------------------------");
+
             }
             if (o.equals("2")) {
+                System.out.println("------------------------------------------------------------");
+                System.out.println("Anonymous Entry: ");
                 int length = jL.size();
                 int ran = (int) (Math.random() * length - 1 ) ;
                 Journal j = jL.get(ran);
                 System.out.println("Date: " + j.getDate() + "\n" + "Entry: " + j.getEntry());
+                System.out.println("------------------------------------------------------------");
+
             }
             }
     }

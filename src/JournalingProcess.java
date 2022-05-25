@@ -5,7 +5,7 @@ public class JournalingProcess {
 
     public static void main (String[] args) {
             UserInfo uI = new UserInfo ();
-            System.out.println("\n"+ "Welcome to the Diary! Remember self love is the best love!");
+            System.out.println("\n"+ "Welcome to the Journal! Remember self love is the best love!");
             System.out.println("------------------------------------------------------------" + "\n");
             String option = "";
             while(!(option.equals("3"))) {
@@ -35,18 +35,19 @@ public class JournalingProcess {
                     }
                 }
                 if (option.equals("2")) {
-                    System.out.println("Registration");
+                    System.out.println("\n"+"Registration" + "\n" + "------------------------------------------------------------");
                     Scanner x = new Scanner(System.in);
                     System.out.print("Set a username: ");
                     String name = x.nextLine();
                     while (uI.findUser(name)) {
-                        System.out.println("This username is already taken:");
+                        System.out.println("\n"+"This username is already taken:");
                         System.out.print("Set a username: ");
                         name = x.nextLine();
                     }
                     System.out.print("Set a password: ");
                     String pass = x.nextLine();
-                    System.out.print("\n"+ "All set! Journaling time!" + "\n" + "Today's date: ");
+                    System.out.print("------------------------------------------------------------");
+                    System.out.print("\n"+ "All set! Journaling time!" + "\n" + "\n" + "Today's date: ");
                     String date = x.nextLine();
                     System.out.print("Begin your entry: ");
                     String entry = x.nextLine();
@@ -56,7 +57,8 @@ public class JournalingProcess {
                     User uu = new User (name, pass, jL);
                     uI.addUser(uu);
                     ArrayList<Journal> jE = uI.getEntries();
-                    System.out.print("\n"+"Saving entry... Complete!"+"\n");
+                    System.out.println("\n"+"Saving entry... Complete!"+"\n");
+                    System.out.println("------------------------------------------------------------");
                     uu.runtime(jE);
                     break;
                 }
